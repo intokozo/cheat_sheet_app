@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to "Главная", root_path %></li>
+    <li class="breadcrumb-item"><%= link_to @section.title, @section %></li>
+    <li class="breadcrumb-item"><%= link_to @article.title, [@section, @article] %></li>
+    <li class="breadcrumb-item active">Редактирование</li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Редактирование статьи</h1>
+  <%= link_to "Назад к статье", [@section, @article], class: "btn btn-outline-primary" %>
+</div>
+
+<%= render 'form', article: @article, section: @section %>

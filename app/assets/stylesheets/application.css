@@ -1,0 +1,59 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.alert {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.article-content {
+  line-height: 1.6;
+}
+
+.article-content h1, 
+.article-content h2, 
+.article-content h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.article-content p {
+  margin-bottom: 1em;
+}
+
+.article-content ul, 
+.article-content ol {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.article-content blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #666;
+}

@@ -1,0 +1,31 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to "Главная", root_path %></li>
+    <li class="breadcrumb-item"><%= link_to @section.title, @section %></li>
+    <li class="breadcrumb-item active"><%= @article.title %></li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1><%= @article.title %></h1>
+  <div>
+    <%= link_to "Редактировать", edit_section_article_path(@section, @article), class: "btn btn-outline-secondary" %>
+    <%= link_to "Удалить", [@section, @article], method: :delete, 
+                data: { confirm: "Удалить статью?" }, 
+                class: "btn btn-outline-danger" %>
+    <%= link_to "Назад к разделу", @section, class: "btn btn-outline-primary" %>
+  </div>
+</div>
+
+<div class="article-content">
+  <%= @article.content %>
+</div>
+
+<div class="mt-4 pt-4 border-top">
+  <small class="text-muted">
+    Создано: <%= @article.created_at.strftime("%d.%m.%Y %H:%M") %>
+    <% if @article.updated_at != @article.created_at %>
+      | Обновлено: <%= @article.updated_at.strftime("%d.%m.%Y %H:%M") %>
+    <% end %>
+  </small>
+</div>

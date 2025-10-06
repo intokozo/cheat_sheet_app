@@ -1,0 +1,30 @@
+<div class="list-group-item">
+  <div class="d-flex justify-content-between align-items-start">
+    <div class="flex-grow-1">
+      <h6 class="mb-1">
+        <%= link_to section.title, section %>
+        <% if section.children.any? || section.articles.any? %>
+          <small class="text-muted">
+            (<%= section.children.count %> подразделов, <%= section.articles.count %> статей)
+          </small>
+        <% end %>
+      </h6>
+      <% if section.description.present? %>
+        <p class="mb-1 text-muted small"><%= section.description %></p>
+      <% end %>
+    </div>
+    <div class="btn-group btn-group-sm">
+      <%= link_to "Добавить подраздел", new_section_child_path(section), class: "btn btn-outline-success" %>
+      <%= link_to "Добавить статью", new_section_article_path(section), class: "btn btn-outline-primary" %>
+      <%= link_to "Редактировать", edit_section_path(section), class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+  
+  <% if section.children.any? %>
+    <div class="mt-2 ms-4">
+      <% section.children.each do |child| %>
+        <%= render 'section_item', section: child %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

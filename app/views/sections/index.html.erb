@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Мои шпаргалки</h1>
+  <div>
+    <%= link_to "Новый раздел", new_section_path, class: "btn btn-primary" %>
+    <%= link_to "Все статьи", articles_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>
+
+<% if @sections.any? %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Корневые разделы</h5>
+    </div>
+    <div class="list-group list-group-flush">
+      <% @sections.each do |section| %>
+        <%= render 'section_item', section: section %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="text-center py-5">
+    <h3>Пока нет разделов</h3>
+    <p class="text-muted">Создайте первый раздел для ваших шпаргалок</p>
+    <%= link_to "Создать раздел", new_section_path, class: "btn btn-primary" %>
+  </div>
+<% end %>
