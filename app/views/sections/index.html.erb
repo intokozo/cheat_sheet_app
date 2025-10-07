@@ -1,26 +1,40 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>Мои шпаргалки</h1>
-  <div>
-    <%= link_to "Новый раздел", new_section_path, class: "btn btn-primary" %>
-    <%= link_to "Все статьи", articles_path, class: "btn btn-outline-secondary" %>
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+  <h1 class="text-3xl font-bold text-gray-900">Мои шпаргалки</h1>
+  <div class="flex flex-col xs:flex-row gap-3">
+    <%= link_to "Новый раздел", 
+                new_section_path, 
+                class: "px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 text-center" %>
+    
+    <%= link_to "Все статьи", 
+                articles_path, 
+                class: "px-6 py-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-medium rounded-lg transition-colors duration-200 text-center" %>
   </div>
 </div>
 
 <% if @sections.any? %>
-  <div class="card">
-    <div class="card-header">
-      <h5 class="mb-0">Корневые разделы</h5>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">Корневые разделы</h2>
     </div>
-    <div class="list-group list-group-flush">
+    <div class="divide-y divide-gray-100">
       <% @sections.each do |section| %>
         <%= render 'section_item', section: section %>
       <% end %>
     </div>
   </div>
 <% else %>
-  <div class="text-center py-5">
-    <h3>Пока нет разделов</h3>
-    <p class="text-muted">Создайте первый раздел для ваших шпаргалок</p>
-    <%= link_to "Создать раздел", new_section_path, class: "btn btn-primary" %>
+  <div class="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="max-w-md mx-auto">
+      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-semibold text-gray-900 mb-2">Пока нет разделов</h3>
+      <p class="text-gray-600 mb-6">Создайте первый раздел для ваших шпаргалок</p>
+      <%= link_to "Создать раздел", 
+                  new_section_path, 
+                  class: "px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 inline-block" %>
+    </div>
   </div>
 <% end %>

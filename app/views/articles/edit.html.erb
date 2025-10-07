@@ -1,15 +1,39 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to "Главная", root_path %></li>
-    <li class="breadcrumb-item"><%= link_to @section.title, @section %></li>
-    <li class="breadcrumb-item"><%= link_to @article.title, [@section, @article] %></li>
-    <li class="breadcrumb-item active">Редактирование</li>
+<!-- Хлебные крошки -->
+<nav class="flex mb-6" aria-label="Хлебные крошки">
+  <ol class="flex items-center space-x-2 text-sm">
+    <li>
+      <%= link_to "Главная", root_path, class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+    </li>
+    <li class="flex items-center">
+      <svg class="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <%= link_to @section.title, @section, class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+    </li>
+    <li class="flex items-center">
+      <svg class="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <%= link_to @article.title, [@section, @article], class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+    </li>
+    <li class="flex items-center">
+      <svg class="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="text-gray-600 font-medium">Редактирование</span>
+    </li>
   </ol>
 </nav>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>Редактирование статьи</h1>
-  <%= link_to "Назад к статье", [@section, @article], class: "btn btn-outline-primary" %>
+<!-- Заголовок и кнопка -->
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+  <h1 class="text-3xl font-bold text-gray-900">Редактирование статьи</h1>
+  <%= link_to "Назад к статье", 
+              [@section, @article], 
+              class: "px-6 py-2 border border-blue-300 hover:border-blue-400 text-blue-600 hover:text-blue-800 font-medium rounded-lg transition-colors text-center" %>
 </div>
 
-<%= render 'form', article: @article, section: @section %>
+<!-- Форма редактирования -->
+<div class="bg-white rounded-xl border border-gray-200 p-6">
+  <%= render 'form', article: @article, section: @section %>
+</div>

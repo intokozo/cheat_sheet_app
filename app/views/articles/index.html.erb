@@ -1,46 +1,18 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to "Главная", root_path %></li>
-    <li class="breadcrumb-item active">Все статьи</li>
-  </ol>
-</nav>
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>Все статьи</h1>
-  <%= link_to "Назад к разделам", sections_path, class: "btn btn-outline-primary" %>
+<div class="flex flex-wrap gap-2">
+  <%= link_to [article.section, article], 
+              class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-1" do %>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+    </svg>
+    Читать
+  <% end %>
+  
+  <%= link_to edit_section_article_path(article.section, article),
+              class: "px-4 py-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 text-sm font-medium rounded-lg transition-colors flex items-center gap-1" do %>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+    </svg>
+    Редактировать
+  <% end %>
 </div>
-
-<% if @articles.any? %>
-  <div class="list-group">
-    <% @articles.each do |article| %>
-      <div class="list-group-item">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">
-            <%= link_to article.title, [article.section, article] %>
-          </h5>
-          <small><%= article.created_at.strftime("%d.%m.%Y") %></small>
-        </div>
-        <p class="mb-1">
-          <small class="text-muted">
-            Раздел: <%= link_to article.section.title, article.section %>
-          </small>
-        </p>
-        <% if article.content.to_plain_text.present? %>
-          <p class="mb-1 text-muted">
-            <%= truncate(article.content.to_plain_text, length: 150) %>
-          </p>
-        <% end %>
-        <div class="mt-2">
-          <%= link_to "Читать", [article.section, article], class: "btn btn-sm btn-outline-primary" %>
-          <%= link_to "Редактировать", edit_section_article_path(article.section, article), class: "btn btn-sm btn-outline-secondary" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <div class="text-center py-5">
-    <h4>Пока нет статей</h4>
-    <p class="text-muted">Создайте первую статью в одном из разделов</p>
-    <%= link_to "К разделам", sections_path, class: "btn btn-primary" %>
-  </div>
-<% end %>

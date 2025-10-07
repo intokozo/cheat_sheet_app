@@ -1,35 +1,61 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to "Главная", root_path %></li>
+<!-- Хлебные крошки -->
+<nav class="flex mb-6" aria-label="Хлебные крошки">
+  <ol class="flex items-center space-x-2 text-sm">
+    <li>
+      <%= link_to "Главная", root_path, class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+    </li>
     <% if @section.parent %>
-      <li class="breadcrumb-item"><%= link_to @section.parent.title, @section.parent %></li>
+      <li class="flex items-center">
+        <svg class="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <%= link_to @section.parent.title, @section.parent, class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+      </li>
     <% end %>
-    <li class="breadcrumb-item active"><%= @section.title %></li>
+    <li class="flex items-center">
+      <svg class="w-4 h-4 mx-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="text-gray-600 font-medium"><%= @section.title %></span>
+    </li>
   </ol>
 </nav>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <div>
-    <h1><%= @section.title %></h1>
+<!-- Заголовок и кнопки -->
+<div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6 mb-8">
+  <div class="flex-grow">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2"><%= @section.title %></h1>
     <% if @section.description.present? %>
-      <p class="text-muted"><%= @section.description %></p>
+      <p class="text-gray-600 text-lg mb-3"><%= @section.description %></p>
     <% end %>
-    <small class="text-muted">Полный путь: <%= @section.full_path %></small>
+    <p class="text-sm text-gray-500">Полный путь: <%= @section.full_path %></p>
   </div>
-  <div>
-    <%= link_to "Добавить подраздел", new_section_child_path(@section), class: "btn btn-success" %>
-    <%= link_to "Добавить статью", new_section_article_path(@section), class: "btn btn-primary" %>
-    <%= link_to "Редактировать", edit_section_path(@section), class: "btn btn-outline-secondary" %>
-    <%= link_to "Назад", (@section.parent ? section_path(@section.parent) : sections_path), class: "btn btn-outline-primary" %>
+  <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 flex-shrink-0">
+    <%= link_to "Добавить подраздел", 
+                new_section_child_path(@section), 
+                class: "px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors text-center" %>
+    
+    <%= link_to "Добавить статью", 
+                new_section_article_path(@section), 
+                class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-center" %>
+    
+    <%= link_to "Редактировать", 
+                edit_section_path(@section), 
+                class: "px-4 py-2 border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-medium rounded-lg transition-colors text-center" %>
+    
+    <%= link_to "Назад", 
+                (@section.parent ? section_path(@section.parent) : sections_path), 
+                class: "px-4 py-2 border border-blue-300 hover:border-blue-400 text-blue-600 hover:text-blue-800 font-medium rounded-lg transition-colors text-center" %>
   </div>
 </div>
 
+<!-- Подразделы -->
 <% if @children.any? %>
-  <div class="card mb-4">
-    <div class="card-header">
-      <h5 class="mb-0">Подразделы</h5>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">Подразделы</h2>
     </div>
-    <div class="list-group list-group-flush">
+    <div class="divide-y divide-gray-100">
       <% @children.each do |child| %>
         <%= render 'section_item', section: child %>
       <% end %>
@@ -37,44 +63,67 @@
   </div>
 <% end %>
 
+<!-- Статьи -->
 <% if @articles.any? %>
-  <div class="card">
-    <div class="card-header">
-      <h5 class="mb-0">Статьи в этом разделе</h5>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">Статьи в этом разделе</h2>
     </div>
-    <div class="list-group list-group-flush">
+    <div class="divide-y divide-gray-100">
       <% @articles.each do |article| %>
-        <div class="list-group-item">
-          <div class="d-flex w-100 justify-content-between">
-            <h6 class="mb-1">
+        <div class="p-6 hover:bg-gray-50 transition-colors">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-3">
+            <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
               <%= link_to article.title, [@section, article] %>
-            </h6>
-            <small><%= article.created_at.strftime("%d.%m.%Y") %></small>
+            </h3>
+            <span class="text-sm text-gray-500 whitespace-nowrap">
+              <%= article.created_at.strftime("%d.%m.%Y") %>
+            </span>
           </div>
+          
           <% if article.content.to_plain_text.present? %>
-            <p class="mb-1 text-muted small">
+            <p class="text-gray-600 mb-4 line-clamp-2">
               <%= truncate(article.content.to_plain_text, length: 150) %>
             </p>
           <% end %>
-          <div class="mt-2">
-            <%= link_to "Редактировать", edit_section_article_path(@section, article), class: "btn btn-sm btn-outline-secondary" %>
-            <%= link_to "Удалить", [@section, article], method: :delete, 
-                        data: { confirm: "Удалить статью?" }, 
-                        class: "btn btn-sm btn-outline-danger" %>
+          
+          <div class="flex flex-wrap gap-2">
+            <%= link_to "Редактировать", 
+                        edit_section_article_path(@section, article), 
+                        class: "px-3 py-1 text-sm border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 rounded transition-colors" %>
+            
+            <%= link_to "Удалить", 
+                        [@section, article], 
+                        method: :delete,
+                        data: { confirm: "Удалить статью?" },
+                        class: "px-3 py-1 text-sm border border-red-300 hover:border-red-400 text-red-600 hover:text-red-800 rounded transition-colors" %>
           </div>
         </div>
       <% end %>
     </div>
   </div>
-<% else %>
-  <% if @children.empty? %>
-    <div class="text-center py-5">
-      <h4>В этом разделе пока нет статей или подразделов</h4>
-      <p class="text-muted">Создайте первую статью или подраздел</p>
-      <div>
-        <%= link_to "Создать подраздел", new_section_child_path(@section), class: "btn btn-success" %>
-        <%= link_to "Создать статью", new_section_article_path(@section), class: "btn btn-primary" %>
+<% end %>
+
+<!-- Пустое состояние -->
+<% if @articles.empty? && @children.empty? %>
+  <div class="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+    <div class="max-w-md mx-auto">
+      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-semibold text-gray-900 mb-2">В этом разделе пока нет статей или подразделов</h3>
+      <p class="text-gray-600 mb-6">Создайте первую статью или подраздел</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <%= link_to "Создать подраздел", 
+                    new_section_child_path(@section), 
+                    class: "px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors text-center" %>
+        
+        <%= link_to "Создать статью", 
+                    new_section_article_path(@section), 
+                    class: "px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-center" %>
       </div>
     </div>
-  <% end %>
+  </div>
 <% end %>

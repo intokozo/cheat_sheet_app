@@ -1,30 +1,42 @@
-<div class="list-group-item">
-  <div class="d-flex justify-content-between align-items-start">
-    <div class="flex-grow-1">
-      <h6 class="mb-1">
-        <%= link_to section.title, section %>
+<div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200">
+  <div class="flex justify-between items-start gap-4">
+    <div class="flex-grow">
+      <div class="flex items-center gap-2 mb-1">
+        <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+          <%= link_to section.title, section %>
+        </h3>
         <% if section.children.any? || section.articles.any? %>
-          <small class="text-muted">
+          <span class="text-sm text-gray-500">
             (<%= section.children.count %> подразделов, <%= section.articles.count %> статей)
-          </small>
+          </span>
         <% end %>
-      </h6>
+      </div>
+      
       <% if section.description.present? %>
-        <p class="mb-1 text-muted small"><%= section.description %></p>
+        <p class="text-gray-600 text-sm mt-1"><%= section.description %></p>
       <% end %>
     </div>
-    <div class="btn-group btn-group-sm">
-      <%= link_to "Добавить подраздел", new_section_child_path(section), class: "btn btn-outline-success" %>
-      <%= link_to "Добавить статью", new_section_article_path(section), class: "btn btn-outline-primary" %>
-      <%= link_to "Редактировать", edit_section_path(section), class: "btn btn-outline-secondary" %>
+
+    <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+      <%= link_to "Добавить подраздел", 
+                  new_section_child_path(section), 
+                  class: "px-3 py-2 text-xs bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors font-medium" %>
+      
+      <%= link_to "Добавить статью", 
+                  new_section_article_path(section), 
+                  class: "px-3 py-2 text-xs bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors font-medium" %>
+      
+      <%= link_to "Редактировать", 
+                  edit_section_path(section), 
+                  class: "px-3 py-2 text-xs bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors font-medium" %>
     </div>
   </div>
   
-  <% if section.children.any? %>
-    <div class="mt-2 ms-4">
-      <% section.children.each do |child| %>
-        <%= render 'section_item', section: child %>
-      <% end %>
-    </div>
-  <% end %>
+  <%# <% if section.children.any? %>
+    <%# <div class="ml-6 mt-4 border-l-2 border-gray-100 pl-4"> %>
+      <%# <% section.children.each do |child| %>
+        <%# <%= render 'section_item', section: child %>
+      <%# <% end %>
+    <%# </div> %>
+  <%# <% end %>
 </div>
